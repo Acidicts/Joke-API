@@ -50,14 +50,19 @@ def get_joke():
 @app.route('/add', methods=['POST'])
 def add_joke():
     data = request.get_json()
-    print(data)
+    app.logger.info(f"Received data: {data}")
     if not data or 'content' not in data:
+        app.logger.error("Invalid request: No data or 'content' field missing")
         return jsonify({'message': 'Invalid request'}), 400
-    new_joke = Joke(content=data['content'])
-    db.session.add(new_joke)
-    db.session.commit()
-    return jsonify({'message': 'Joke added successfully',
-                    'id': new_joke.id}), 201
+    try:
+        new_joke = Joke(content=data['content'])
+        db.session.add(new_joke)
+        db.session.commit()
+        app.logger.info(f"Joke added successfully with ID: {new_joke.id}")
+        return jsonify({'message': 'Joke added successfully', 'id': new_joke.id}), 201
+    except Exception as e:
+        app.logger.error(f"Error adding joke: {e}")
+        return jsonify({'message': 'Internal Server Error'}), 500
 
 @app.route('/delete', methods=['DELETE'])
 def delete_joke():
