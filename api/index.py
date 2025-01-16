@@ -7,16 +7,16 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jokes.db'
 db = SQLAlchemy(app)
 
-# Ensure the database file has read and write permissions
+
+class Joke(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(200), nullable=False)
+
 if os.path.exists('instance/jokes.db'):
     os.chmod('instance/jokes.db', 0o666)
 
 with app.app_context():
     db.create_all()
-
-class Joke(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
 
 @app.route('/', methods=['GET'])
 def home():
