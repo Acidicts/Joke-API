@@ -4,7 +4,7 @@ Here is the documentation for the Jokes API:
 
 ## Base URL
 ```
-http://localhost:5000/
+https://joke-api-azure.vercel.app/
 ```
 
 ## Endpoints
