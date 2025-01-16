@@ -65,7 +65,7 @@ def add_joke():
         app.logger.error(f"Error adding joke: {e}")
         return jsonify({'message': 'Internal Server Error', 'error': str(e)}), 500
 
-@app.route('/delete_db', methods=['DELETE'])
+@app.route('/delete_db', methods=['GET'])
 def delete_db():
     db.drop_all()
 
