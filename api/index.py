@@ -62,8 +62,7 @@ def add_joke():
         return jsonify({'message': 'Joke added successfully', 'id': new_joke.id}), 201
     except Exception as e:
         app.logger.error(f"Error adding joke: {e}")
-        return jsonify({'message': 'Internal Server Error',
-                        'error': e}), 500
+        return jsonify({'message': 'Internal Server Error', 'error': str(e)}), 500
 
 @app.route('/delete', methods=['DELETE'])
 def delete_joke():
